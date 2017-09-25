@@ -1,0 +1,164 @@
+<p><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="markdown.css" rel="stylesheet"></link></p>
+<h2>联建光电广告 Android SDK 接入文档</h2>
+<h3>一，SDK介绍</h3>
+<p>联建光电广告SDK提供各种广告形式给客户端集成，SDK支持的广告形式包括：</p>
+<ul>
+<li>开屏广告（支持图片和视频）</li>
+<li>插屏广告（支持图片和视频）</li>
+<li>横幅广告（支持图片和视频）</li>
+<li>嵌入式广告（支持图片和视频）</li>
+</ul>
+<h3>二，SDK接入说明</h3>
+<p>1、 AdSDK 包含以下部分（位于libs目录下）:</p>
+<ul>
+<li>
+<p>lianjianssp.jar : Sdk的接口部分</p>
+</li>
+</ul>
+<p>2、 注册App，开发者需要注册你的App</p>
+<p>3、 配置AndroidManifest.xml</p>
+<p>Ad SDK需要的权限列表:
+  <pre><code>
+     &lt;uses-permission android:name="android.permission.INTERNET"/&gt;
+     &lt;uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/&gt;
+     &lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/&gt;
+     &lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/&gt;
+     &lt;uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/&gt;
+     &lt;uses-permission android:name="android.permission.READ_PHONE_STATE"/&gt;
+     &lt;uses-permission android:name="android.permission.GET_TASKS"/&gt;
+  </code></pre></p>
+<p>
+<p>4、 配置Proguard</p>
+<p>如果要做混淆的话，需要在配置里如下的keep项</p>
+<p><pre><code>
+    -keep class liantronics.sspsdk.&#42;&#42;{&#42;;}
+     </code></pre></p>
+<p>5、 初始化AdSdk</p>
+<p>在 Application onCreate 时候需要初始化 AdSdk。
+  调用如下接口:
+  <pre><code>
+      AdManager.init(this);
+  </code></pre>
+  </p>
+<h3>三，SDK接口说明</h3>
+<p>1、开屏广告</p>
+<p>请求广告接口
+   <pre><code>
+       AdManager.showSplashAd(Activity activity, String positionId, int time, AdListener adListener);
+   </code></pre></p>
+<p>
+   positionId　广告位ID<br/>
+   time　      跳转时间，默认3秒跳转<br/>
+   adListener　广告事件监听<br/>
+</p>
+<p>参考:<br/>
+　　   1) 注意在配置了开屏的activity中配置android:configChanges="keyboard|keyboardHidden|orientation|screenSize<br />
+　　   2) 开屏请求广告需要联网一段时间，在取广告期间，可以在当前界面默认显示一张全屏图，避免取开屏广告期间无内容展示，影响体验。<br/>
+　　   </p>
+<p>2、 插屏广告</p>
+<p>请求广告接口
+<pre><code>
+    AdManager.showInterstitialAd(Activity activity, String positionId, AdListener adListener);
+    </code></pre></p>
+<p>
+positionId　广告位ID<br/>
+adListener　广告事件监听<br/>
+</p>
+<p>参考:<br/>
+　　   1) 注意在配置了开屏的activity中配置android:configChanges="keyboard|keyboardHidden|orientation|screenSize<br /></p>
+<p>3、  横幅广告</p>
+<p>（1） 顶部横幅 请求广告接口
+<pre>
+<code>
+    AdManager.showTopBannerAd(Activity activity, String positionId,int marginTop, AdListener adListener);
+    AdManager.showTopBannerAd(Activity activity, String positionId, AdListener adListener);
+</code>
+</pre>
+</p>
+<p>
+marginTop　 距离系统状态栏的距离,此项可省略<br/>
+positionId　广告位ID<br/>
+adListener　广告事件监听<br/>
+</p>
+<p>参考:<br/>
+　　   1) 注意在配置了开屏的activity中配置android:configChanges="keyboard|keyboardHidden|orientation|screenSize<br /></p>
+<p>（2） 底部横幅 请求广告接口
+<pre>
+    <code>
+        AdManager.showBottomBannerAd(Activity activity, String positionId,int marginBottom, AdListener adListener);
+        AdManager.showBottomBannerAd(Activity activity, String positionId, AdListener adListener);
+        </code>
+</pre>
+</p>
+<p>
+marginBottom　  距离底部的距离,此项可省略<br/>
+positionId　广告位ID<br/>
+adListener　广告事件监听<br/>
+</p><p>参考:<br/>
+　　   1) 注意在配置了开屏的activity中配置android:configChanges="keyboard|keyboardHidden|orientation|screenSize<br /></p>
+<p>4、 嵌入式广告</p>
+<p>请求广告接口
+   <pre><code>
+       AdManager.showEmbedAd(Activity activity, String positionId, int frameLayoutId, AdListener adListener);
+    </code></pre>
+   frameLayoutId 为嵌套容器FrameLayout的Id<br/>
+   positionId 广告位ID<br/>
+   count 请求广告数量<br/>
+   adListener　广告事件监听<br/></p>
+   <p>
+<p>参考:<br/>
+<pre>
+    <code>
+        < FrameLayout
+        android:id="@+id/fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/ >
+    </code>
+</pre>
+
+</p>
+<p>5、 关闭广告</p>
+<p>（1） 关闭所有广告
+<pre><code>
+    AdManager.clear();
+    </code></pre>
+<p>
+<p>（2） 关闭指定广告
+<pre><code>String tag= AdManager.showSplashAd(Activity activity, String positionId, AdListener adListener);
+    AdManager.closeAd(tag);
+</code></pre>
+<p>
+<p>
+tag 为每个广告的唯一标签<br/>
+</p>
+<p>6、 回调接口</p>
+<pre><code>
+    /**广告回调接口*/
+    public interface AdListener {
+        /**成功展示回调*/
+        void onAdPresent();
+        /**点击回调*/
+        void onAdClick();
+        /**关闭回调*/
+        void onAdDismissed();
+        /**展示失败*/
+        void onAdFailed(int code);
+    }
+    </code></pre>
+<p>
+<p>7、 错误状态码</p>
+<p>101：      系统错误，请联系管理员<p>
+<p>102：      缺少参数<p>
+<p>103：      参数非法<p>
+<p>104：      ts已过期<p>
+<p>105：      广告位信息不存在<p>
+<p>106：      广告位策略过虑<p>
+<p>107：      sign错误<p>
+<p>200：      找不到符合的广告信息<p>
+<p>999：      tagid 为空<p>
+<p>-100：     缺少广告注册码<p>
+<p>-101：     视频播放失败<p>
+<p>-102：     图片加载失败<p>
+<p>-200：     不支持此视频广告格式<p>
+
