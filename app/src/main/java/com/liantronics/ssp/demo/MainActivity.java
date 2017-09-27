@@ -10,25 +10,25 @@ import liantronics.sspsdk.AdListener;
 import liantronics.sspsdk.AdManager;
 
 public class MainActivity extends Activity {
-    String tag="";
+    String tag = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //顶部横幅
-        showTopBannerAd(((EditText) findViewById(R.id.et1)).getText().toString().trim());
+        showTopBannerAd();
         //底部横幅
-        showBottomBannerAd(((EditText)findViewById(R.id.et2)).getText().toString().trim());
+        showBottomBannerAd();
         //插屏
-        showInterstitialAd(((EditText)findViewById(R.id.et3)).getText().toString().trim());
+        showInterstitialAd();
         //开屏
-        showSplashAd(((EditText)findViewById(R.id.et5)).getText().toString().trim());
-        //底部横幅视频
-        showBottomBannerAdVideo(((EditText)findViewById(R.id.et6)).getText().toString().trim());
-        //嵌入式广告
-        showEmbedAd(((EditText)findViewById(R.id.et7)).getText().toString().trim());
-        //嵌入式视频
-        showEmbedAdVideo(((EditText)findViewById(R.id.et8)).getText().toString().trim());
+        showSplashAd();
+
+        //信息流
+        showEmbedInfoAd();
+        //视频广告
+        showEmbedVideoAd();
 
         //关闭所有广告
         findViewById(R.id.bt4).setOnClickListener(new View.OnClickListener() {
@@ -49,14 +49,16 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * 嵌入式视频
-     * @param positionId 广告位ID
+     * 视频广告
      */
-    private void showEmbedAdVideo(final String positionId) {
+    private void showEmbedVideoAd() {
         findViewById(R.id.bt8).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AdManager.showEmbedAd(MainActivity.this, positionId,R.id.fl2, new AdListener() {
+
+                AdManager.showEmbedVideoAd(MainActivity.this,
+                        ((EditText) findViewById(R.id.et8)).getText().toString().trim(),//广告位ID
+                        R.id.fl2, new AdListener() {
                             @Override
                             public void onAdPresent() {
                             }
@@ -71,7 +73,7 @@ public class MainActivity extends Activity {
 
                             @Override
                             public void onAdFailed(int code) {
-                                Toast.makeText(MainActivity.this,"错误码："+code,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "错误码：" + code, Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -79,15 +81,16 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * 嵌入式广告
-     * @param positionId 广告位ID
+     * 信息流广告
      */
-    private void showEmbedAd(final String positionId) {
+    private void showEmbedInfoAd() {
         findViewById(R.id.bt7).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                AdManager.showEmbedAd(MainActivity.this,positionId,R.id.fl, new AdListener() {
+                AdManager.showEmbedInfoAd(MainActivity.this,
+                        ((EditText) findViewById(R.id.et7)).getText().toString().trim(),//广告位ID
+                        R.id.fl1, new AdListener() {
                             @Override
                             public void onAdPresent() {
                             }
@@ -102,54 +105,25 @@ public class MainActivity extends Activity {
 
                             @Override
                             public void onAdFailed(int code) {
-                                Toast.makeText(MainActivity.this,"错误码："+code,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "错误码：" + code, Toast.LENGTH_SHORT).show();
                             }
                         });
             }
         });
     }
 
-    /**
-     * 底部横幅视频
-     * @param positionId 广告位ID
-     */
-    private void showBottomBannerAdVideo(final String positionId) {
-        findViewById(R.id.bt6).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                AdManager.showBottomBannerAd(MainActivity.this,positionId, new AdListener() {
-                            @Override
-                            public void onAdPresent() {
-                            }
-
-                            @Override
-                            public void onAdClick() {
-                            }
-
-                            @Override
-                            public void onAdDismissed() {
-                            }
-
-                            @Override
-                            public void onAdFailed(int code) {
-                                Toast.makeText(MainActivity.this,"错误码："+code,Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-        });
-    }
 
     /**
      * 开屏
-     * @param positionId 广告位ID
      */
-    private void showSplashAd(final String positionId) {
+    private void showSplashAd() {
         findViewById(R.id.bt5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                AdManager.showSplashAd(MainActivity.this,positionId, 3,new AdListener() {
+                AdManager.showSplashAd(MainActivity.this,
+                        ((EditText) findViewById(R.id.et5)).getText().toString().trim(), //广告位ID
+                        3, new AdListener() {
                             @Override
                             public void onAdPresent() {
                             }
@@ -164,7 +138,7 @@ public class MainActivity extends Activity {
 
                             @Override
                             public void onAdFailed(int code) {
-                                Toast.makeText(MainActivity.this,"错误码："+code,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "错误码：" + code, Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -173,13 +147,14 @@ public class MainActivity extends Activity {
 
     /**
      * 插屏
-     * @param positionId 广告位ID
      */
-    private void showInterstitialAd(final String positionId) {
+    private void showInterstitialAd() {
         findViewById(R.id.bt3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AdManager.showInterstitialAd(MainActivity.this,positionId, new AdListener() {
+                AdManager.showInterstitialAd(MainActivity.this,
+                        ((EditText) findViewById(R.id.et3)).getText().toString().trim(), //广告位ID
+                        new AdListener() {
                             @Override
                             public void onAdPresent() {
                             }
@@ -194,7 +169,7 @@ public class MainActivity extends Activity {
 
                             @Override
                             public void onAdFailed(int code) {
-                                Toast.makeText(MainActivity.this,"错误码："+code,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "错误码：" + code, Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -203,14 +178,15 @@ public class MainActivity extends Activity {
 
     /**
      * 底部横幅
-     *  @param positionId 广告位ID
      */
-    private void showBottomBannerAd(final String positionId) {
+    private void showBottomBannerAd() {
         findViewById(R.id.bt2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                AdManager.showBottomBannerAd(MainActivity.this,positionId, 100, new AdListener() {
+                AdManager.showBottomBannerAd(MainActivity.this,
+                        ((EditText) findViewById(R.id.et2)).getText().toString().trim(),//广告位ID
+                        100, new AdListener() {
                             @Override
                             public void onAdPresent() {
                             }
@@ -225,7 +201,7 @@ public class MainActivity extends Activity {
 
                             @Override
                             public void onAdFailed(int code) {
-                                Toast.makeText(MainActivity.this,"错误码："+code,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "错误码：" + code, Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -234,13 +210,14 @@ public class MainActivity extends Activity {
 
     /**
      * 顶部横幅
-     * @param positionId 广告位ID
      */
-    private void showTopBannerAd(final String positionId) {
+    private void showTopBannerAd() {
         findViewById(R.id.bt1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tag= AdManager.showTopBannerAd(MainActivity.this,positionId, 100, new AdListener() {
+                tag = AdManager.showTopBannerAd(MainActivity.this,
+                        ((EditText) findViewById(R.id.et1)).getText().toString().trim(),//广告位ID
+                        100, new AdListener() {
                             @Override
                             public void onAdPresent() {
                             }
@@ -255,7 +232,7 @@ public class MainActivity extends Activity {
 
                             @Override
                             public void onAdFailed(int code) {
-                                Toast.makeText(MainActivity.this,"错误码："+code,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "错误码：" + code, Toast.LENGTH_SHORT).show();
                             }
                         });
             }
