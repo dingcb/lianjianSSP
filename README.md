@@ -10,6 +10,8 @@
 * 插屏广告（API>=10）
 * 横幅广告（API>=10）
 * 视频广告（API>=14）
+* 信息流（API>=10）
+
 
 ##### 图片格式支持：.jpeg 、.jpg 、.png 、.gif
 ##### 视频格式支持：.mp4
@@ -96,11 +98,11 @@
 >参考:<br>
 　　 >>1、注意在配置了开屏的activity中配置android:configChanges="keyboard|keyboardHidden|orientation|screenSize<br>
 
-### 4、 嵌入式广告
+### 4、 视频广告
 
 >请求广告接口
 
-       AdManager.showEmbedAd(Activity activity, String positionId, int frameLayoutId, AdListener adListener);
+       AdManager.showEmbedVideoAd(Activity activity, String positionId, int frameLayoutId, AdListener adListener);
     
 >frameLayoutId 为嵌套容器FrameLayout的Id<br>
 >positionId 广告位ID<br>
@@ -108,12 +110,33 @@
 >adListener　广告事件监听<br>
 >参考:<br>
     
-        < FrameLayout
-        android:id="@+id/fl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/ >
+        <FrameLayout
+                android:id="@+id/fl2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+### 5、 信息流
+
+>请求广告接口
+
+       AdManager.showEmbedInfoAd(Activity activity, String positionId, int frameLayoutId, AdListener adListener);
     
-### 5、 关闭广告
+>frameLayoutId 为嵌套容器FrameLayout的Id<br>
+>positionId 广告位ID<br>
+>count 请求广告数量<br>
+>adListener　广告事件监听<br>
+>参考:<br>
+    
+        <FrameLayout
+                android:id="@+id/fl1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+    
+### 6、 关闭广告
 
 ##### （1） 关闭所有广告
 
@@ -125,7 +148,7 @@
      String tag= AdManager.showSplashAd(Activity activity, String positionId, AdListener adListener);
      AdManager.closeAd(tag);
 >tag 为每个广告的唯一标签<br>
-### 6、 回调接口
+### 7、 回调接口
 
 
     /**广告回调接口*/
@@ -140,7 +163,7 @@
         void onAdFailed(int code);
     }
     
-### 7、 错误状态码
+### 8、 错误状态码
 
      101： 系统错误，请联系管理员
 
